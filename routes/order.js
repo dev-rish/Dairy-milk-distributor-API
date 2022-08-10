@@ -2,7 +2,9 @@ const { Router } = require('express');
 const { isNumber } = require('lodash');
 const moment = require('moment');
 
-const { createOrder, updateOrder, getOrder } = require('../controllers/order');
+const {
+    createOrder, updateOrder, getOrder, deleteOrder,
+} = require('../controllers/order');
 const AppError = require('../utils/appError');
 const { ORDER_STATUSES, DATE_FORMAT } = require('../utils/constants');
 const wrapHandler = require('../utils/wrapHandler');
@@ -51,7 +53,15 @@ router.patch('/updateStatus/:orderId', wrapHandler(async (req) => {
         deliveryDate,
     });
 
-    return { statusCode: 204, ...updatedOrder };
+    return { statusCode: 200, ...updatedOrder };
+}));
+
+router.delete('/delete/:orderId', wrapHandler(async (req) => {
+    const { orderId } = req.params;
+
+    const order = await deleteOrder(orderId);
+
+    return { statusCode: 200, ...order };
 }));
 
 module.exports = router;

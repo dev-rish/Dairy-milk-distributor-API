@@ -7,7 +7,7 @@ const { generate: generateOrderId } = require('order-id')(
 const Order = require('../models/order');
 const AppError = require('../utils/appError');
 
-const { DATE_FORMAT } = require('../utils/constants');
+const { DATE_FORMAT, ORDER_STATUSES } = require('../utils/constants');
 const { getCapacity, updateQuantity } = require('./capacity');
 
 const getOrder = async (orderId) => {
@@ -26,10 +26,10 @@ const createOrder = async (quantity) => {
     const capacity = await getCapacity(today);
 
     if (capacity.quantityLeft < quantity) {
-        throw new AppError('Insufficient capacity', 401);
+        throw new AppError('Quantity not available', 401);
     }
 
-    await updateQuantity(today, capacity.quantityLeft - quantity);
+    await updateQuantity({ date: today, $inc: { quantityLeft: -quantity } });
 
     const createdOrder = await Order.create({
         orderDate: today,
@@ -52,8 +52,25 @@ const updateOrder = async (order) => {
     return updatedOrder.toJSON();
 };
 
+const deleteOrder = async (orderId) => {
+    const deletedOrder = await Order.findOneAndDelete({ orderId });
+
+    if (isEmpty(deletedOrder)) {
+        throw new AppError('Order not found', 404);
+    }
+
+    const { orderDate, quantity } = deletedOrder;
+
+    if (deletedOrder.status !== ORDER_STATUSES.DELIVERED) {
+        await updateQuantity({ date: orderDate, $inc: { quantityLeft: quantity } });
+    }
+
+    return deletedOrder.toJSON();
+};
+
 module.exports = {
     createOrder,
     updateOrder,
     getOrder,
+    deleteOrder,
 };
