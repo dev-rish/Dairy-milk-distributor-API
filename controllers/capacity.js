@@ -17,12 +17,10 @@ const getCapacity = async (date) => {
     return capacity;
 };
 
-const updateQuantity = async (date, quantity) => {
-    const updatedCapacity = await Capacity.findOneAndUpdate(
-        { date },
-        { quantityLeft: quantity },
-        { new: true },
-    );
+const updateQuantity = async (updates) => {
+    const { date, ...rest } = updates;
+
+    const updatedCapacity = await Capacity.findOneAndUpdate({ date }, rest, { new: true });
 
     if (!updatedCapacity) {
         throw new AppError('No capacity found', 401);
