@@ -2,9 +2,13 @@ const { Schema, model } = require('mongoose');
 const { ORDER_STATUSES } = require('../utils/constants');
 
 const orderSchema = new Schema({
-    date: {
+    orderDate: {
         type: String,
-        required: [true, 'Date is required'],
+        required: [true, 'Order date is required'],
+    },
+    deliveryDate: {
+        type: String,
+        default: null,
     },
     orderId: {
         type: String,
