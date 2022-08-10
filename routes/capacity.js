@@ -17,3 +17,5 @@ router.get('/checkCapacity/:date', wrapHandler(async (req) => {
 
     return { statusCode: 200, ...capacity };
 }));
+
+module.exports = router;

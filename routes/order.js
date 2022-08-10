@@ -11,7 +11,7 @@ const wrapHandler = require('../utils/wrapHandler');
 
 const router = Router();
 
-router.get('/getOrder/:orderId', wrapHandler(async (req) => {
+router.get('/get/:orderId', wrapHandler(async (req) => {
     const { orderId } = req.params;
 
     const order = await getOrder(orderId);
