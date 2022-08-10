@@ -1,5 +1,4 @@
 const { isEmpty } = require('lodash');
-const moment = require('moment');
 const { generate: generateOrderId } = require('order-id')(
     process.env.ORDER_ID_KEY,
 );
@@ -7,7 +6,8 @@ const { generate: generateOrderId } = require('order-id')(
 const Order = require('../models/order');
 const AppError = require('../utils/appError');
 
-const { DATE_FORMAT, ORDER_STATUSES } = require('../utils/constants');
+const { ORDER_STATUSES } = require('../utils/constants');
+const { getTodaysDate } = require('../utils/helper');
 const { getCapacity, updateQuantity } = require('./capacity');
 
 const getOrder = async (orderId) => {
@@ -21,7 +21,7 @@ const getOrder = async (orderId) => {
 };
 
 const createOrder = async (quantity) => {
-    const today = moment().format(DATE_FORMAT);
+    const today = getTodaysDate();
 
     const capacity = await getCapacity(today);
 

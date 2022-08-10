@@ -1,12 +1,12 @@
 const { Router } = require('express');
 const { isNumber } = require('lodash');
-const moment = require('moment');
 
 const {
     createOrder, updateOrder, getOrder, deleteOrder,
 } = require('../controllers/order');
 const AppError = require('../utils/appError');
-const { ORDER_STATUSES, DATE_FORMAT } = require('../utils/constants');
+const { ORDER_STATUSES } = require('../utils/constants');
+const { getTodaysDate } = require('../utils/helper');
 const wrapHandler = require('../utils/wrapHandler');
 
 const router = Router();
@@ -46,7 +46,7 @@ router.patch('/updateStatus/:orderId', wrapHandler(async (req) => {
         throw new AppError('Invalid Status', 401);
     }
 
-    const deliveryDate = status === ORDER_STATUSES.DELIVERED ? moment().format(DATE_FORMAT) : null;
+    const deliveryDate = status === ORDER_STATUSES.DELIVERED ? getTodaysDate() : null;
     const updatedOrder = await updateOrder({
         orderId,
         status,

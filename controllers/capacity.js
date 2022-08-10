@@ -14,7 +14,7 @@ const getCapacity = async (date) => {
         });
     }
 
-    return capacity;
+    return capacity.toJSON();
 };
 
 const updateQuantity = async (updates) => {

@@ -5,7 +5,7 @@ const ORDER_STATUSES = {
     DELIVERED: 'DELIVERED',
 };
 
-const DATE_FORMAT = 'D-MM-YYYY';
+const DATE_FORMAT = 'DD-MM-YYYY';
 
 module.exports = {
     ORDER_STATUSES,
