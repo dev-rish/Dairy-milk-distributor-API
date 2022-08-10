@@ -12,7 +12,7 @@ const getCapacity = async (date) => {
     if (isEmpty(capacity)) {
         const today = moment(getTodaysDate(), DATE_FORMAT);
 
-        // check if querying for past date
+        // prevent capacity creation for past date
         if (moment(date, DATE_FORMAT).isBefore(today)) {
             throw new AppError('Capacity not found', 404);
         }
