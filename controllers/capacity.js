@@ -1,12 +1,22 @@
 const { isEmpty } = require('lodash');
+const moment = require('moment');
 
 const Capacity = require('../models/capacity');
 const AppError = require('../utils/appError');
+const { DATE_FORMAT } = require('../utils/constants');
+const { getTodaysDate } = require('../utils/helper');
 
 const getCapacity = async (date) => {
     let capacity = await Capacity.findOne({ date });
 
     if (isEmpty(capacity)) {
+        const today = moment(getTodaysDate(), DATE_FORMAT);
+
+        // check if querying for past date
+        if (moment(date, DATE_FORMAT).isBefore(today)) {
+            throw new AppError('Capacity not found', 404);
+        }
+
         capacity = await Capacity.create({
             date,
             maxCapacity: process.env.MAX_CAPACITY,
