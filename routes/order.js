@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { isNumber, has: hasProperty } = require('lodash');
+const { isNumber } = require('lodash');
 
 const { createOrder, updateOrder, getOrder, deleteOrder } = require('../controllers/order');
 const AppError = require('../utils/appError');
