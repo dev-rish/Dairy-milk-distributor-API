@@ -1,7 +1,5 @@
 const { isEmpty } = require('lodash');
-const { generate: generateOrderId } = require('order-id')(
-    process.env.ORDER_ID_KEY,
-);
+const { generate: generateOrderId } = require('order-id')(process.env.ORDER_ID_KEY);
 
 const Order = require('../models/order');
 const AppError = require('../utils/appError');
