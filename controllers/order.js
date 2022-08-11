@@ -45,7 +45,11 @@ const createOrder = async (orderDetails) => {
 const updateOrder = async (order) => {
     const { orderId, ...updates } = order;
 
-    const updatedOrder = await Order.findOneAndUpdate({ orderId }, updates, { new: true });
+    const updatedOrder = await Order.findOneAndUpdate(
+        { orderId },
+        updates,
+        { new: true, runValidators: true },
+    );
 
     if (isEmpty(updatedOrder)) {
         throw new AppError('Order not found', 404);

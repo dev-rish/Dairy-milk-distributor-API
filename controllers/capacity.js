@@ -30,13 +30,17 @@ const getCapacity = async (date) => {
 const updateCapacityDetails = async (updates) => {
     const { date, ...rest } = updates;
 
-    const updatedCapacity = await Capacity.findOneAndUpdate({ date }, rest, { new: true });
+    const updatedCapacity = await Capacity.findOneAndUpdate(
+        { date },
+        rest,
+        { new: true, runValidators: true },
+    );
 
     if (!updatedCapacity) {
         throw new AppError('No capacity found', 401);
     }
 
-    return updatedCapacity;
+    return updatedCapacity.toJSON();
 };
 
 module.exports = {
