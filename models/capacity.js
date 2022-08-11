@@ -3,22 +3,22 @@ const { Schema, model } = require('mongoose');
 const capacitySchema = new Schema({
     date: {
         type: String,
-        required: [true, 'Date is required'],
+        required: [true, 'Valid date is required'],
         unique: true,
         index: true,
     },
     maxCapacity: {
         type: Number,
-        required: [true, 'Capacity is required'],
+        required: [true, 'Valid capacity is required'],
     },
     quantityLeft: {
         type: Number,
-        required: [true, 'Quantity is required'],
+        required: [true, 'Valid quantity is required'],
         min: [0, 'Quantity should be atleast 0'],
     },
     unitPrice: {
         type: Number,
-        required: [true, 'Unit Price is required'],
+        required: [true, 'Valid unit price is required'],
         min: [1, 'Unit price should be atleast 1'],
     },
 });
