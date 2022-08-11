@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { isNumber } = require('lodash');
+const { isNumber, isEmpty, isInteger } = require('lodash');
 
 const {
     createOrder, updateOrder, getOrder, deleteOrder,
@@ -33,9 +33,15 @@ router.post('/add', wrapHandler(async (req) => {
 
 router.patch('/update/:orderId', wrapHandler(async (req) => {
     const { orderId } = req.params;
-    const { quantity } = req.body;
+    const { status, quantity, ...updates } = req.body;
 
-    // TODO: What all to be allowed for update??
+    if (!isEmpty(status) || quantity !== undefined) {
+        throw new AppError('Quantity or status update not allowed');
+    }
+
+    const updatedOrder = await updateOrder({ orderId, ...updates });
+
+    return { statusCode: 200, ...updatedOrder };
 }));
 
 router.patch('/updateStatus/:orderId', wrapHandler(async (req) => {
