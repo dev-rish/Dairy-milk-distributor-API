@@ -1,5 +1,10 @@
-const AppError = require("./appError");
+const AppError = require('./appError');
 
+/**
+ * Formats any error
+ * @param {Error} err
+ * @returns {Object}
+ */
 const sendErrorDev = (err, req, res) => {
     res.status(err.statusCode).json({
         status: err.status,
@@ -9,6 +14,11 @@ const sendErrorDev = (err, req, res) => {
     });
 };
 
+/**
+ * Converts mongoose Validation Error to AppError i.e. strips out unneccessary details
+ * @param {Error} err
+ * @returns {AppError}
+ */
 const sendErrorProd = (err, req, res) => {
     const { isOperational, statusCode, status, message } = err;
 
@@ -28,6 +38,11 @@ const sendErrorProd = (err, req, res) => {
     });
 };
 
+/**
+ * Converts mongoose Validation Error to AppError
+ * @param {Error} err
+ * @returns {AppError}
+ */
 const handleValidationError = (err) => {
     // Fetch error msg for various fields
     const errors = Object.values(err.errors).map((el) => el.message);
