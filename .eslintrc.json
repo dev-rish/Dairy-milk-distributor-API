@@ -17,6 +17,7 @@
             // "ObjectExpression": "always",
             "ObjectPattern": { "multiline": false }
           }
-        ]
+        ],
+        "no-param-reassign": "off"
     }
 }
