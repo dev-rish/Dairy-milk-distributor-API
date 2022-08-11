@@ -14,10 +14,12 @@ const capacitySchema = new Schema({
     quantityLeft: {
         type: Number,
         required: [true, 'Quantity is required'],
+        min: [0, 'Quantity should be atleast 0'],
     },
     unitPrice: {
         type: Number,
         required: [true, 'Unit Price is required'],
+        min: [1, 'Unit price should be atleast 1'],
     },
 });
 
