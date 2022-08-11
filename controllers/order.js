@@ -6,7 +6,7 @@ const AppError = require('../utils/appError');
 
 const { ORDER_STATUSES } = require('../utils/constants');
 const { getTodaysDate } = require('../utils/helper');
-const { getCapacity, updateQuantity } = require('./capacity');
+const { getCapacity, updateCapacityDetails } = require('./capacity');
 
 const getOrder = async (orderId) => {
     const order = await Order.findOne({ orderId });
@@ -29,7 +29,7 @@ const createOrder = async (orderDetails) => {
         throw new AppError('Quantity not available', 401);
     }
 
-    await updateQuantity({ date: today, $inc: { quantityLeft: -quantity } });
+    await updateCapacityDetails({ date: today, $inc: { quantityLeft: -quantity } });
 
     const createdOrder = await Order.create({
         ...rest,
@@ -64,7 +64,7 @@ const deleteOrder = async (orderId) => {
     const { orderDate, quantity } = deletedOrder;
 
     if (deletedOrder.status !== ORDER_STATUSES.DELIVERED) {
-        await updateQuantity({ date: orderDate, $inc: { quantityLeft: quantity } });
+        await updateCapacityDetails({ date: orderDate, $inc: { quantityLeft: quantity } });
     }
 
     return deletedOrder.toJSON();
