@@ -1,9 +1,7 @@
 const { Router } = require('express');
 const { isNumber, isEmpty } = require('lodash');
 
-const {
-    createOrder, updateOrder, getOrder, deleteOrder,
-} = require('../controllers/order');
+const { createOrder, updateOrder, getOrder, deleteOrder } = require('../controllers/order');
 const AppError = require('../utils/appError');
 const { ORDER_STATUSES } = require('../utils/constants');
 const { getTodaysDate } = require('../utils/helper');

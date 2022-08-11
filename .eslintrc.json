@@ -12,6 +12,11 @@
     "rules": {
         "linebreak-style": 0,
         "indent": ["warn", 4],
-        "no-console": "warn"
+        "no-console": "warn",
+        "object-curly-newline": ["error", {
+            // "ObjectExpression": "always",
+            "ObjectPattern": { "multiline": false }
+          }
+        ]
     }
 }
