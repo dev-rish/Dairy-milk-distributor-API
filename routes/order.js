@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { isNumber, isEmpty, isInteger } = require('lodash');
+const { isNumber, isEmpty } = require('lodash');
 
 const {
     createOrder, updateOrder, getOrder, deleteOrder,
