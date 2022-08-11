@@ -1,7 +1,7 @@
 const AppError = require('./appError');
 
 /**
- * Formats any error
+ * Formats any error before sending to client
  * @param {Error} err
  * @returns {Object}
  */
@@ -16,6 +16,7 @@ const sendErrorDev = (err, req, res) => {
 
 /**
  * Converts mongoose Validation Error to AppError i.e. strips out unneccessary details
+ * before sending to client
  * @param {Error} err
  * @returns {AppError}
  */
