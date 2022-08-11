@@ -21,6 +21,7 @@ const getCapacity = async (date) => {
             date,
             maxCapacity: process.env.MAX_CAPACITY,
             quantityLeft: process.env.MAX_CAPACITY,
+            unitPrice: process.env.UNIT_PRICE,
         });
     }
 

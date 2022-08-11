@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { isNumber, isEmpty } = require('lodash');
+const { isNumber, has: hasProperty } = require('lodash');
 
 const { createOrder, updateOrder, getOrder, deleteOrder } = require('../controllers/order');
 const AppError = require('../utils/appError');
@@ -18,23 +18,23 @@ router.get('/get/:orderId', wrapHandler(async (req) => {
 }));
 
 router.post('/add', wrapHandler(async (req) => {
-    const { quantity } = req.body;
+    const { quantity, ...rest } = req.body;
 
-    if (!isNumber(quantity) || quantity <= 0) {
+    if (!isNumber(quantity)) {
         throw new AppError('Invalid quantity', 401);
     }
 
-    const order = await createOrder(quantity);
+    const order = await createOrder({ quantity: quantity.toFixed(2), ...rest });
 
     return { statusCode: 201, ...order };
 }));
 
 router.patch('/update/:orderId', wrapHandler(async (req) => {
     const { orderId } = req.params;
-    const { status, quantity, ...updates } = req.body;
+    const updates = req.body;
 
-    if (!isEmpty(status) || quantity !== undefined) {
-        throw new AppError('Quantity or status update not allowed');
+    if (hasProperty(updates, 'status') || hasProperty(updates, 'quantity')) {
+        throw new AppError('Quantity or status update not allowed', 401);
     }
 
     const updatedOrder = await updateOrder({ orderId, ...updates });

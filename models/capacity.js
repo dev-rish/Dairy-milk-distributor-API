@@ -15,6 +15,10 @@ const capacitySchema = new Schema({
         type: Number,
         required: [true, 'Quantity is required'],
     },
+    unitPrice: {
+        type: Number,
+        required: [true, 'Unit Price is required'],
+    },
 });
 
 const Capacity = model('Capacity', capacitySchema);
