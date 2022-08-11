@@ -4,16 +4,15 @@ const moment = require('moment');
 const Capacity = require('../models/capacity');
 const AppError = require('../utils/appError');
 const { DATE_FORMAT } = require('../utils/constants');
-const { getTodaysDate } = require('../utils/helper');
 
 const getCapacity = async (date) => {
     let capacity = await Capacity.findOne({ date });
 
     if (isEmpty(capacity)) {
-        const today = moment(getTodaysDate(), DATE_FORMAT);
+        const today = moment();
 
         // prevent capacity creation for past date
-        if (moment(date, DATE_FORMAT).isBefore(today)) {
+        if (moment(date, DATE_FORMAT).isBefore(today, 'date')) {
             throw new AppError('Capacity not found', 404);
         }
 
