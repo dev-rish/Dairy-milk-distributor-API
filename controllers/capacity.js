@@ -27,7 +27,7 @@ const getCapacity = async (date) => {
     return capacity.toJSON();
 };
 
-const updateQuantity = async (updates) => {
+const updateCapacityDetails = async (updates) => {
     const { date, ...rest } = updates;
 
     const updatedCapacity = await Capacity.findOneAndUpdate({ date }, rest, { new: true });
@@ -41,5 +41,5 @@ const updateQuantity = async (updates) => {
 
 module.exports = {
     getCapacity,
-    updateQuantity,
+    updateCapacityDetails,
 };
