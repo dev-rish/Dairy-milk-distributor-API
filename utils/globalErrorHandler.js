@@ -40,7 +40,7 @@ const sendErrorProd = (err, req, res) => {
 };
 
 /**
- * Converts mongoose Validation Error to AppError
+ * Converts mongoose mongoose ValidationError to AppError
  * @param {Error} err
  * @returns {AppError}
  */
@@ -49,6 +49,16 @@ const handleValidationError = (err) => {
     const errors = Object.values(err.errors).map((el) => el.message);
     // Combine all error msgs
     const message = `Invalid input data. ${errors.join('. ')}.`;
+    return new AppError(message, 400);
+};
+
+/**
+ * Converts mongoose mongoose CastError to AppError
+ * @param {Function} fn
+ * @returns {Function}
+ */
+const handleCastError = (err) => {
+    const message = `Invalid ${err.path}: ${err.value}`;
     return new AppError(message, 400);
 };
 
@@ -64,11 +74,10 @@ module.exports = (err, req, res, next) => {
     if (process.env.NODE_ENV === 'development') {
         sendErrorDev(err, req, res);
     } else if (process.env.NODE_ENV === 'production') {
-        // Make a copy of err
-        // const error = { message: err.message, ...err };
-
         if (err.name === 'ValidationError') {
             err = handleValidationError(err);
+        } else if (err.name === 'CastError') {
+            err = handleCastError(err);
         }
 
         sendErrorProd(err, req, res);
