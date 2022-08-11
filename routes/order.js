@@ -31,13 +31,9 @@ router.post('/add', wrapHandler(async (req) => {
 
 router.patch('/update/:orderId', wrapHandler(async (req) => {
     const { orderId } = req.params;
-    const updates = req.body;
+    const { address } = req.body;
 
-    if (hasProperty(updates, 'status') || hasProperty(updates, 'quantity')) {
-        throw new AppError('Quantity or status update not allowed', 401);
-    }
-
-    const updatedOrder = await updateOrder({ orderId, ...updates });
+    const updatedOrder = await updateOrder({ orderId, address });
 
     return { statusCode: 200, ...updatedOrder };
 }));
