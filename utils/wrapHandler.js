@@ -1,5 +1,5 @@
 /**
- * This wrapper is responsible for formatting response and catching errors
+ * This wrapper is responsible for formatting response and catching errors if any
  * @param {Function} fn
  * @returns {Function}
  */
