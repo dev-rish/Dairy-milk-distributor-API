@@ -1,6 +1,50 @@
 const { Schema, model } = require('mongoose');
 const { ORDER_STATUSES } = require('../utils/constants');
 
+/**
+ * @swagger
+ * components:
+ *      schemas:
+ *          Order:
+ *              type: object
+ *              properties:
+ *                  orderDate:
+ *                      type: string
+ *                      description: Date(DD-MM-YYYY) when order placed
+ *                      nullable: false
+ *                  deliveryDate:
+ *                      type: string
+ *                      description: Date(DD-MM-YYYY) when order delivered
+ *                      nullable: true
+ *                  orderId:
+ *                      type: string
+ *                      nullable: false
+ *                  quantity:
+ *                      type: number
+ *                      nullable: false
+ *                      description: Quantity of milk in litre(s)
+ *                  status:
+ *                      type: string
+ *                      enum: [PLACED, PACKED, DISPATCHED, DELIVERED]
+ *                      nullable: false
+ *                      description: Status of order
+ *                  address:
+ *                      type: string
+ *                      nullable: false
+ *                      description: Address of user who placed order
+ *                  totalPrice:
+ *                      type: number
+ *              example:
+ *                  _id: 92f4f7405d4e00aca429b910
+ *                  orderDate: 27-08-2022
+ *                  deliveryDate: null
+ *                  orderId: 5003-663000-4099
+ *                  quantity: 2.5
+ *                  status: PLACED
+ *                  address: Bangalore, India
+ *                  totalPrice: 175
+ *                  __v: 0
+ */
 const orderSchema = new Schema({
     orderDate: {
         type: String,
