@@ -18,7 +18,9 @@
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "mongoose": "^6.5.2",
-    "order-id": "^2.1.2"
+    "order-id": "^2.1.2",
+    "swagger-jsdoc": "^6.2.5",
+    "swagger-ui-express": "^4.5.0"
   },
   "devDependencies": {
     "eslint": "^8.21.0",
