@@ -9,12 +9,51 @@ const wrapHandler = require('../utils/wrapHandler');
 
 const router = Router();
 
+/**
+ * @swagger
+ * /api/order/get/{orderId}:
+ *      get:
+ *          summary: Gets order details given the order id
+ *          parameters:
+ *              - in: path
+ *                name: orderId
+ *                schema:
+ *                      type: string
+ *                required: true
+ *          responses:
+ *              200:
+ *                  description: The order by id
+ *                  content:
+ *                      application/json:
+ *                          schema:
+ *                              type: object
+ *                              properties:
+ *                                  status:
+ *                                      type: string
+ *                                      default: 'success'
+ *                                  data:
+ *                                      type: object
+ *                                      $ref: '#/components/schemas/Order'
+ *              404:
+ *                  description: Order not found
+ *                  content:
+ *                      application/json:
+ *                          schema:
+ *                              type: object
+ *                              properties:
+ *                                  status:
+ *                                      type: string
+ *                                      default: 'fail'
+ *                                  message:
+ *                                      type: string
+ *                                      default: 'Order not found'
+ */
 router.get('/get/:orderId', wrapHandler(async (req) => {
     const { orderId } = req.params;
 
     const order = await getOrder(orderId);
 
-    return { statusCode: 201, ...order };
+    return { statusCode: 200, ...order };
 }));
 
 router.post('/add', wrapHandler(async (req) => {
