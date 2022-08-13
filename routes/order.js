@@ -121,6 +121,12 @@ router.post('/add', wrapHandler(async (req) => {
  * /api/order/update/{orderId}:
  *      patch:
  *          summary: Update existing order. Currently only updating address is supported
+ *          parameters:
+ *              - in: path
+ *                name: orderId
+ *                schema:
+ *                      type: string
+ *                required: true
  *          requestBody:
  *              required: true
  *              content:
@@ -168,6 +174,56 @@ router.patch('/update/:orderId', wrapHandler(async (req) => {
     return { statusCode: 200, ...updatedOrder };
 }));
 
+/**
+ * @swagger
+ * /api/order/updateStatus/{orderId}:
+ *      patch:
+ *          summary: Update the status of the order.
+ *          parameters:
+ *              - in: path
+ *                name: orderId
+ *                schema:
+ *                      type: string
+ *                required: true
+ *          requestBody:
+ *              required: true
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: object
+ *                          properties:
+ *                              status:
+ *                                  type: string
+ *                                  enum: [PLACED, PACKED, DISPATCHED, DELIVERED]
+ *          responses:
+ *              200:
+ *                  description: Order updated successfully
+ *                  content:
+ *                      application/json:
+ *                          schema:
+ *                              type: object
+ *                              properties:
+ *                                  status:
+ *                                      type: string
+ *                                      default: 'success'
+ *                                  data:
+ *                                      $ref: '#/components/schemas/Order'
+ *              404:
+ *                  description: Order not found
+ *                  content:
+ *                      application/json:
+ *                          schema:
+ *                              type: object
+ *                              properties:
+ *                                  status:
+ *                                      type: string
+ *                                      default: 'fail'
+ *                                  message:
+ *                                      type: string
+ *                                      default: 'Order not found'
+ *              500:
+ *                 description: Server error
+ */
 router.patch('/updateStatus/:orderId', wrapHandler(async (req) => {
     const { orderId } = req.params;
     const { status } = req.body;
