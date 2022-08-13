@@ -11,6 +11,21 @@ const router = Router();
 
 /**
  * @swagger
+ * components:
+ *      schemas:
+ *          OrderResponseSuccess:
+ *              type: object
+ *              properties:
+ *                  status:
+ *                      type: string
+ *                      default: 'success'
+ *                  data:
+ *                      type: object
+ *                      $ref: '#/components/schemas/Order'
+ */
+
+/**
+ * @swagger
  * /api/order/get/{orderId}:
  *      get:
  *          summary: Gets order details given the order id
@@ -27,13 +42,7 @@ const router = Router();
  *                      application/json:
  *                          schema:
  *                              type: object
- *                              properties:
- *                                  status:
- *                                      type: string
- *                                      default: 'success'
- *                                  data:
- *                                      type: object
- *                                      $ref: '#/components/schemas/Order'
+ *                              $ref: '#/components/schemas/OrderResponseSuccess'
  *              404:
  *                  description: Order not found
  *                  content:
@@ -82,12 +91,7 @@ router.get('/get/:orderId', wrapHandler(async (req) => {
  *                      application/json:
  *                          schema:
  *                              type: object
- *                              properties:
- *                                  status:
- *                                      type: string
- *                                      default: 'success'
- *                                  data:
- *                                      $ref: '#/components/schemas/Order'
+ *                              $ref: '#/components/schemas/OrderResponseSuccess'
  *              401:
  *                  description: Quantity not available
  *                  content:
@@ -143,12 +147,7 @@ router.post('/add', wrapHandler(async (req) => {
  *                      application/json:
  *                          schema:
  *                              type: object
- *                              properties:
- *                                  status:
- *                                      type: string
- *                                      default: 'success'
- *                                  data:
- *                                      $ref: '#/components/schemas/Order'
+ *                              $ref: '#/components/schemas/OrderResponseSuccess'
  *              404:
  *                  description: Order not found
  *                  content:
@@ -202,12 +201,7 @@ router.patch('/update/:orderId', wrapHandler(async (req) => {
  *                      application/json:
  *                          schema:
  *                              type: object
- *                              properties:
- *                                  status:
- *                                      type: string
- *                                      default: 'success'
- *                                  data:
- *                                      $ref: '#/components/schemas/Order'
+ *                              $ref: '#/components/schemas/OrderResponseSuccess'
  *              404:
  *                  description: Order not found
  *                  content:
@@ -261,13 +255,7 @@ router.patch('/updateStatus/:orderId', wrapHandler(async (req) => {
  *                      application/json:
  *                          schema:
  *                              type: object
- *                              properties:
- *                                  status:
- *                                      type: string
- *                                      default: 'success'
- *                                  data:
- *                                      type: object
- *                                      $ref: '#/components/schemas/Order'
+ *                              $ref: '#/components/schemas/OrderResponseSuccess'
  *              404:
  *                  description: Order not found
  *                  content:
