@@ -9,6 +9,49 @@ const wrapHandler = require('../utils/wrapHandler');
 
 const router = Router();
 
+/**
+ * @swagger
+ * /api/capacity/checkCapacity/{date}:
+ *      get:
+ *          summary: The details like capacity, quantity left and the unit price (per litre) for that date.
+ *                   New details are created if not already if date is current or future.
+ *          parameters:
+ *              - in: path
+ *                name: date
+ *                schema:
+ *                      type: string
+ *                description: Date with format DD-MM-YYYY
+ *                required: true
+ *          responses:
+ *              200:
+ *                  description: The capacity object
+ *                  content:
+ *                      application/json:
+ *                          schema:
+ *                              type: object
+ *                              properties:
+ *                                  status:
+ *                                      type: string
+ *                                      default: 'success'
+ *                                  data:
+ *                                      type: object
+ *                                      $ref: '#/components/schemas/Capacity'
+ *              404:
+ *                  description: Capacity not found
+ *                  content:
+ *                      application/json:
+ *                          schema:
+ *                              type: object
+ *                              properties:
+ *                                  status:
+ *                                      type: string
+ *                                      default: 'fail'
+ *                                  message:
+ *                                      type: string
+ *                                      default: 'Order not found'
+ *              500:
+ *                  description: Server error
+ */
 router.get('/checkCapacity/:date', wrapHandler(async (req) => {
     const { date } = req.params;
 
@@ -20,6 +63,59 @@ router.get('/checkCapacity/:date', wrapHandler(async (req) => {
     return { statusCode: 200, ...capacity };
 }));
 
+/**
+ * @swagger
+ * /api/capacity/updateCapacity/{date}:
+ *      get:
+ *          summary: Update capcity details. Updating quantity left & unit price (per litre) is supported.
+ *          parameters:
+ *              - in: path
+ *                name: date
+ *                schema:
+ *                      type: string
+ *                description: Date with format DD-MM-YYYY
+ *                required: true
+ *          requestBody:
+ *              required: true
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: object
+ *                          properties:
+ *                              quantityLeft:
+ *                                  type: number
+ *                              unitPrice:
+ *                                  type: number
+ *          responses:
+ *              200:
+ *                  description: The updated capacity details object
+ *                  content:
+ *                      application/json:
+ *                          schema:
+ *                              type: object
+ *                              properties:
+ *                                  status:
+ *                                      type: string
+ *                                      default: 'success'
+ *                                  data:
+ *                                      type: object
+ *                                      $ref: '#/components/schemas/Capacity'
+ *              404:
+ *                  description: Capacity not found
+ *                  content:
+ *                      application/json:
+ *                          schema:
+ *                              type: object
+ *                              properties:
+ *                                  status:
+ *                                      type: string
+ *                                      default: 'fail'
+ *                                  message:
+ *                                      type: string
+ *                                      default: 'Order not found'
+ *              500:
+ *                  description: Server error
+ */
 router.patch('/updateCapacity/:date', wrapHandler(async (req) => {
     const { date } = req.params;
     const { quantityLeft, unitPrice } = req.body;

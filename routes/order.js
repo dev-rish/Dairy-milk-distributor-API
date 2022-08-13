@@ -120,7 +120,7 @@ router.post('/add', wrapHandler(async (req) => {
  * @swagger
  * /api/order/update/{orderId}:
  *      patch:
- *          summary: Update existing order. Currently only updating address is supported
+ *          summary: Update existing order. Updating address is supported.
  *          parameters:
  *              - in: path
  *                name: orderId
