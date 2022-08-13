@@ -33,7 +33,7 @@ const updateCapacityDetails = async (updates) => {
     const currentDetails = await getCapacity(date);
 
     if (rest.quantityLeft > currentDetails.maxCapacity) {
-        throw new AppError('Quantity greater than max capacity', 401);
+        throw new AppError('Quantity cannot be greater than max capacity', 401);
     }
 
     const updatedDetails = await Capacity.findOneAndUpdate(
