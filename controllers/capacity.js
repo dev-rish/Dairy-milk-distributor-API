@@ -30,17 +30,23 @@ const getCapacity = async (date) => {
 const updateCapacityDetails = async (updates) => {
     const { date, ...rest } = updates;
 
-    const updatedCapacity = await Capacity.findOneAndUpdate(
+    const currentDetails = await getCapacity(date);
+
+    if (rest.quantityLeft > currentDetails.maxCapacity) {
+        throw new AppError('Quantity greater than max capacity', 401);
+    }
+
+    const updatedDetails = await Capacity.findOneAndUpdate(
         { date },
         rest,
         { new: true, runValidators: true },
     );
 
-    if (!updatedCapacity) {
+    if (!updatedDetails) {
         throw new AppError('Capacity Details not found', 401);
     }
 
-    return updatedCapacity.toJSON();
+    return updatedDetails.toJSON();
 };
 
 module.exports = {
