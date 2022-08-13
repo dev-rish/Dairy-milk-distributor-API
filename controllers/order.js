@@ -42,8 +42,14 @@ const createOrder = async (orderDetails) => {
     return createdOrder.toJSON();
 };
 
-const updateOrder = async (order) => {
-    const { orderId, ...updates } = order;
+const updateOrder = async (orderDetails) => {
+    const { orderId, ...updates } = orderDetails;
+
+    const order = await getOrder(orderId);
+
+    if (order.status === ORDER_STATUSES.DELIVERED) {
+        throw new AppError('Delivered orders cannot be updated', 401);
+    }
 
     const updatedOrder = await Order.findOneAndUpdate(
         { orderId },
@@ -59,19 +65,21 @@ const updateOrder = async (order) => {
 };
 
 const deleteOrder = async (orderId) => {
-    const deletedOrder = await Order.findOneAndDelete({ orderId });
+    const order = await getOrder(orderId);
 
-    if (isEmpty(deletedOrder)) {
+    if (isEmpty(order)) {
         throw new AppError('Order not found', 404);
     }
 
-    const { orderDate, quantity } = deletedOrder;
-
-    if (deletedOrder.status !== ORDER_STATUSES.DELIVERED) {
-        await updateCapacityDetails({ date: orderDate, $inc: { quantityLeft: quantity } });
+    if (order.status === ORDER_STATUSES.DELIVERED) {
+        throw new AppError('Delivered orders cannot be deleted', 401);
     }
 
-    return deletedOrder.toJSON();
+    await Order.findOneAndDelete({ orderId });
+
+    await updateCapacityDetails({ date: order.orderDate, $inc: { quantityLeft: order.quantity } });
+
+    return order.toJSON();
 };
 
 module.exports = {
