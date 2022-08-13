@@ -58,7 +58,6 @@ router.get('/get/:orderId', wrapHandler(async (req) => {
     return { statusCode: 200, ...order };
 }));
 
-
 /**
  * @swagger
  * /api/order/add:
@@ -117,6 +116,49 @@ router.post('/add', wrapHandler(async (req) => {
     return { statusCode: 201, ...order };
 }));
 
+/**
+ * @swagger
+ * /api/order/update/{orderId}:
+ *      patch:
+ *          summary: Update existing order. Currently only updating address is supported
+ *          requestBody:
+ *              required: true
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: object
+ *                          properties:
+ *                              address:
+ *                                  type: string
+ *          responses:
+ *              200:
+ *                  description: Order updated successfully
+ *                  content:
+ *                      application/json:
+ *                          schema:
+ *                              type: object
+ *                              properties:
+ *                                  status:
+ *                                      type: string
+ *                                      default: 'success'
+ *                                  data:
+ *                                      $ref: '#/components/schemas/Order'
+ *              404:
+ *                  description: Order not found
+ *                  content:
+ *                      application/json:
+ *                          schema:
+ *                              type: object
+ *                              properties:
+ *                                  status:
+ *                                      type: string
+ *                                      default: 'fail'
+ *                                  message:
+ *                                      type: string
+ *                                      default: 'Order not found'
+ *              500:
+ *                 description: Server error
+ */
 router.patch('/update/:orderId', wrapHandler(async (req) => {
     const { orderId } = req.params;
     const { address } = req.body;
