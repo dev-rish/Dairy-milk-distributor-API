@@ -47,6 +47,8 @@ const router = Router();
  *                                  message:
  *                                      type: string
  *                                      default: 'Order not found'
+ *              500:
+ *                  description: Server error
  */
 router.get('/get/:orderId', wrapHandler(async (req) => {
     const { orderId } = req.params;
@@ -56,6 +58,53 @@ router.get('/get/:orderId', wrapHandler(async (req) => {
     return { statusCode: 200, ...order };
 }));
 
+
+/**
+ * @swagger
+ * /api/order/add:
+ *      post:
+ *          summary: Add new order
+ *          requestBody:
+ *              required: true
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: object
+ *                          properties:
+ *                              quantity:
+ *                                  type: number
+ *                                  default: 1
+ *                              address:
+ *                                  type: string
+ *          responses:
+ *              201:
+ *                  description: Order added successfully
+ *                  content:
+ *                      application/json:
+ *                          schema:
+ *                              type: object
+ *                              properties:
+ *                                  status:
+ *                                      type: string
+ *                                      default: 'success'
+ *                                  data:
+ *                                      $ref: '#/components/schemas/Order'
+ *              401:
+ *                  description: Quantity not available
+ *                  content:
+ *                      application/json:
+ *                          schema:
+ *                              type: object
+ *                              properties:
+ *                                  status:
+ *                                      type: string
+ *                                      default: 'fail'
+ *                                  message:
+ *                                      type: string
+ *                                      default: 'Quantity not available'
+ *              500:
+ *                 description: Server error
+ */
 router.post('/add', wrapHandler(async (req) => {
     const { quantity, ...rest } = req.body;
 
