@@ -242,6 +242,48 @@ router.patch('/updateStatus/:orderId', wrapHandler(async (req) => {
     return { statusCode: 200, ...updatedOrder };
 }));
 
+/**
+ * @swagger
+ * /api/order/delete/{orderId}:
+ *      delete:
+ *          summary: Deletes and returns the deleted order.
+ *                   If the order is not delivered, the capacity is also updated.
+ *          parameters:
+ *              - in: path
+ *                name: orderId
+ *                schema:
+ *                      type: string
+ *                required: true
+ *          responses:
+ *              200:
+ *                  description: The deleted order
+ *                  content:
+ *                      application/json:
+ *                          schema:
+ *                              type: object
+ *                              properties:
+ *                                  status:
+ *                                      type: string
+ *                                      default: 'success'
+ *                                  data:
+ *                                      type: object
+ *                                      $ref: '#/components/schemas/Order'
+ *              404:
+ *                  description: Order not found
+ *                  content:
+ *                      application/json:
+ *                          schema:
+ *                              type: object
+ *                              properties:
+ *                                  status:
+ *                                      type: string
+ *                                      default: 'fail'
+ *                                  message:
+ *                                      type: string
+ *                                      default: 'Order not found'
+ *              500:
+ *                  description: Server error
+ */
 router.delete('/delete/:orderId', wrapHandler(async (req) => {
     const { orderId } = req.params;
 
