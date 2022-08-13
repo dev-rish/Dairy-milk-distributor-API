@@ -29,8 +29,6 @@ const createOrder = async (orderDetails) => {
         throw new AppError('Quantity not available', 401);
     }
 
-    await updateCapacityDetails({ date: today, $inc: { quantityLeft: -quantity } });
-
     const createdOrder = await Order.create({
         ...rest,
         orderDate: today,
@@ -38,6 +36,8 @@ const createOrder = async (orderDetails) => {
         quantity,
         totalPrice: (quantity * unitPrice).toFixed(2),
     });
+
+    await updateCapacityDetails({ date: today, $inc: { quantityLeft: -quantity } });
 
     return createdOrder.toJSON();
 };
