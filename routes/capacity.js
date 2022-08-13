@@ -11,6 +11,21 @@ const router = Router();
 
 /**
  * @swagger
+ * components:
+ *      schemas:
+ *          CapacityResponseSuccess:
+ *              type: object
+ *              properties:
+ *                  status:
+ *                      type: string
+ *                      default: 'success'
+ *                  data:
+ *                      type: object
+ *                      $ref: '#/components/schemas/Capacity'
+ */
+
+/**
+ * @swagger
  * /api/capacity/checkCapacity/{date}:
  *      get:
  *          summary: The details like capacity, quantity left and the unit price (per litre) for that date.
@@ -29,13 +44,7 @@ const router = Router();
  *                      application/json:
  *                          schema:
  *                              type: object
- *                              properties:
- *                                  status:
- *                                      type: string
- *                                      default: 'success'
- *                                  data:
- *                                      type: object
- *                                      $ref: '#/components/schemas/Capacity'
+ *                              $ref: '#/components/schemas/CapacityResponseSuccess'
  *              404:
  *                  description: Capacity not found
  *                  content:
@@ -66,7 +75,7 @@ router.get('/checkCapacity/:date', wrapHandler(async (req) => {
 /**
  * @swagger
  * /api/capacity/updateCapacity/{date}:
- *      get:
+ *      patch:
  *          summary: Update capcity details. Updating quantity left & unit price (per litre) is supported.
  *          parameters:
  *              - in: path
@@ -93,13 +102,7 @@ router.get('/checkCapacity/:date', wrapHandler(async (req) => {
  *                      application/json:
  *                          schema:
  *                              type: object
- *                              properties:
- *                                  status:
- *                                      type: string
- *                                      default: 'success'
- *                                  data:
- *                                      type: object
- *                                      $ref: '#/components/schemas/Capacity'
+ *                              $ref: '#/components/schemas/CapacityResponseSuccess'
  *              404:
  *                  description: Capacity not found
  *                  content:
