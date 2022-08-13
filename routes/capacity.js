@@ -11,6 +11,8 @@ const router = Router();
 
 /**
  * @swagger
+ * tags:
+ *      - name: Capacity Details
  * components:
  *      schemas:
  *          CapacityResponseSuccess:
@@ -28,6 +30,8 @@ const router = Router();
  * @swagger
  * /api/capacity/checkCapacity/{date}:
  *      get:
+ *          tags:
+ *              - Capacity Details
  *          summary: The details like capacity, quantity left and the unit price (per litre) for that date.
  *                   New details are created if not already if date is current or future.
  *          parameters:
@@ -76,6 +80,8 @@ router.get('/checkCapacity/:date', wrapHandler(async (req) => {
  * @swagger
  * /api/capacity/updateCapacity/{date}:
  *      patch:
+ *          tags:
+ *              - Capacity Details
  *          summary: Update capcity details. Updating quantity left & unit price (per litre) is supported.
  *          parameters:
  *              - in: path

@@ -11,6 +11,8 @@ const router = Router();
 
 /**
  * @swagger
+ * tags:
+ *      - name: Order
  * components:
  *      schemas:
  *          OrderResponseSuccess:
@@ -28,6 +30,8 @@ const router = Router();
  * @swagger
  * /api/order/get/{orderId}:
  *      get:
+ *          tags:
+ *              - Order
  *          summary: Gets order details given the order id
  *          parameters:
  *              - in: path
@@ -71,6 +75,8 @@ router.get('/get/:orderId', wrapHandler(async (req) => {
  * @swagger
  * /api/order/add:
  *      post:
+ *          tags:
+ *              - Order
  *          summary: Add new order
  *          requestBody:
  *              required: true
@@ -124,6 +130,8 @@ router.post('/add', wrapHandler(async (req) => {
  * @swagger
  * /api/order/update/{orderId}:
  *      patch:
+ *          tags:
+ *              - Order
  *          summary: Update existing order. Updating address is supported.
  *          parameters:
  *              - in: path
@@ -177,6 +185,8 @@ router.patch('/update/:orderId', wrapHandler(async (req) => {
  * @swagger
  * /api/order/updateStatus/{orderId}:
  *      patch:
+ *          tags:
+ *              - Order
  *          summary: Update the status of the order.
  *          parameters:
  *              - in: path
@@ -240,6 +250,8 @@ router.patch('/updateStatus/:orderId', wrapHandler(async (req) => {
  * @swagger
  * /api/order/delete/{orderId}:
  *      delete:
+ *          tags:
+ *              - Order
  *          summary: Deletes and returns the deleted order.
  *                   If the order is not delivered, the capacity is also updated.
  *          parameters:
