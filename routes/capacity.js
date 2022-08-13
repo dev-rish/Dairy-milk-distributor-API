@@ -50,7 +50,7 @@ const router = Router();
  *                              type: object
  *                              $ref: '#/components/schemas/CapacityResponseSuccess'
  *              404:
- *                  description: Capacity not found
+ *                  description: Capacity Details not found
  *                  content:
  *                      application/json:
  *                          schema:
@@ -61,7 +61,7 @@ const router = Router();
  *                                      default: 'fail'
  *                                  message:
  *                                      type: string
- *                                      default: 'Order not found'
+ *                                      default: 'Capacity Details not found'
  *              500:
  *                  description: Server error
  */
@@ -110,7 +110,7 @@ router.get('/checkCapacity/:date', wrapHandler(async (req) => {
  *                              type: object
  *                              $ref: '#/components/schemas/CapacityResponseSuccess'
  *              404:
- *                  description: Capacity not found
+ *                  description: Capacity Details not found
  *                  content:
  *                      application/json:
  *                          schema:
@@ -121,7 +121,7 @@ router.get('/checkCapacity/:date', wrapHandler(async (req) => {
  *                                      default: 'fail'
  *                                  message:
  *                                      type: string
- *                                      default: 'Order not found'
+ *                                      default: 'Capacity Details not found'
  *              500:
  *                  description: Server error
  */

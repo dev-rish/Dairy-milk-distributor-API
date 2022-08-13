@@ -13,7 +13,7 @@ const getCapacity = async (date) => {
 
         // prevent capacity creation for past date
         if (moment(date, DATE_FORMAT).isBefore(today, 'date')) {
-            throw new AppError('Capacity not found', 404);
+            throw new AppError('Capacity Details not found', 404);
         }
 
         capacity = await Capacity.create({
@@ -37,7 +37,7 @@ const updateCapacityDetails = async (updates) => {
     );
 
     if (!updatedCapacity) {
-        throw new AppError('No capacity found', 401);
+        throw new AppError('Capacity Details not found', 401);
     }
 
     return updatedCapacity.toJSON();

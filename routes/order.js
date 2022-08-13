@@ -253,7 +253,7 @@ router.patch('/updateStatus/:orderId', wrapHandler(async (req) => {
  *          tags:
  *              - Order
  *          summary: Deletes and returns the deleted order.
- *                   If the order is not delivered, the capacity is also updated.
+ *                   If the order is not delivered, the capacity details are also updated.
  *          parameters:
  *              - in: path
  *                name: orderId
